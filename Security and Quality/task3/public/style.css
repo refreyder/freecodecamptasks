@@ -1,0 +1,98 @@
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: #0f172a;
+    color: #f8fafc;
+    padding: 1.5rem;
+}
+
+.container {
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+h1 {
+    margin: 0;
+    color: #38bdf8;
+    text-align: center;
+}
+
+form,
+.library-panel {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 1.25rem;
+}
+
+h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1.15rem;
+}
+
+.library-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.library-header h2 {
+    margin: 0;
+}
+
+input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.6rem 0.85rem;
+    margin-bottom: 0.75rem;
+    border-radius: 8px;
+    border: 1px solid #334155;
+    background-color: #0f172a;
+    color: #f8fafc;
+    font: inherit;
+}
+
+button {
+    padding: 0.6rem 1.1rem;
+    border: none;
+    border-radius: 8px;
+    background-color: #38bdf8;
+    color: #0f172a;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+button.danger {
+    background-color: #ef4444;
+    color: #ffffff;
+}
+
+ul {
+    padding-left: 1.25rem;
+    margin: 0.5rem 0 1rem;
+}
+
+.book-item {
+    cursor: pointer;
+    padding: 0.35rem 0;
+    color: #7dd3fc;
+}
+
+.book-item:hover {
+    text-decoration: underline;
+}
+
+.muted {
+    color: #94a3b8;
+    font-size: 0.85rem;
+}
+
+.hidden {
+    display: none;
+}

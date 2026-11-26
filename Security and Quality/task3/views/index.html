@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Library</title>
+    <link rel="stylesheet" href="/public/style.css">
+</head>
+<body>
+    <main class="container">
+        <h1>Personal Library</h1>
+        <form id="newBookForm">
+            <h2>Add a New Book</h2>
+            <input type="text" id="bookTitle" name="title" placeholder="New Book Title" required>
+            <button type="submit">Add Book</button>
+        </form>
+        <section class="library-panel">
+            <div class="library-header">
+                <h2>Books</h2>
+                <button id="deleteAllBtn" type="button" class="danger">Delete All Books</button>
+            </div>
+            <ul id="bookList"></ul>
+        </section>
+        <section id="bookDetail" class="library-panel hidden"></section>
+    </main>
+
+    <script>
+        const bookList = document.getElementById("bookList");
+        const bookDetail = document.getElementById("bookDetail");
+
+        async function loadBooks() {
+            const res = await fetch("/api/books");
+            const books = await res.json();
+            bookList.innerHTML = "";
+            books.forEach((book) => {
+                const li = document.createElement("li");
+                li.className = "book-item";
+                li.textContent = `${book.title} (${book.commentcount} comments)`;
+                li.addEventListener("click", () => loadBookDetail(book._id));
+                bookList.appendChild(li);
+            });
+        }
+
+        async function loadBookDetail(id) {
+            const res = await fetch(`/api/books/${id}`);
+            const book = await res.json();
+            bookDetail.classList.remove("hidden");
+            bookDetail.innerHTML = `
+                <h2>${book.title}</h2>
+                <p class="muted">_id: ${book._id}</p>
+                <ul>${book.comments.map((c) => `<li>${c}</li>`).join("")}</ul>
+                <form id="commentForm">
+                    <input type="text" name="comment" placeholder="New Comment" required>
+                    <button type="submit">Add Comment</button>
+                </form>
+                <button id="deleteBookBtn" type="button" class="danger">Delete Book</button>
+            `;
+            document.getElementById("commentForm").addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const body = new URLSearchParams(new FormData(e.target));
+                await fetch(`/api/books/${id}`, { method: "POST", body });
+                await loadBooks();
+                await loadBookDetail(id);
+            });
+            document.getElementById("deleteBookBtn").addEventListener("click", async () => {
+                await fetch(`/api/books/${id}`, { method: "DELETE" });
+                bookDetail.classList.add("hidden");
+                await loadBooks();
+            });
+        }
+
+        document.getElementById("newBookForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const body = new URLSearchParams(new FormData(e.target));
+            await fetch("/api/books", { method: "POST", body });
+            e.target.reset();
+            await loadBooks();
+        });
+
+        document.getElementById("deleteAllBtn").addEventListener("click", async () => {
+            await fetch("/api/books", { method: "DELETE" });
+            bookDetail.classList.add("hidden");
+            await loadBooks();
+        });
+
+        loadBooks();
+    </script>
+</body>
+</html>
