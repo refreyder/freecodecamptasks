@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thread</title>
+    <link rel="stylesheet" href="/public/style.css">
+</head>
+<body>
+    <main class="container">
+        <h1 id="threadTitle"></h1>
+        <section id="threadDisplay"></section>
+        <form id="newReplyForm">
+            <h2>Reply</h2>
+            <textarea name="text" placeholder="Reply text..." required></textarea>
+            <input type="text" name="delete_password" placeholder="password to delete" required>
+            <button type="submit">Submit</button>
+        </form>
+    </main>
+    <script>
+        const parts = window.location.pathname.split("/").filter(Boolean);
+        const board = parts[1];
+        const threadId = parts[2];
+        document.getElementById("threadTitle").textContent = `/b/${board}/${threadId}`;
+
+        async function loadThread() {
+            const res = await fetch(`/api/replies/${board}?thread_id=${threadId}`);
+            const thread = await res.json();
+            document.getElementById("threadDisplay").innerHTML = `
+                <article class="card">
+                    <h3>${thread.text}</h3>
+                    <ul>${thread.replies.map((r) => `<li>${r.text} <span class="muted">(${r._id})</span></li>`).join("")}</ul>
+                </article>
+            `;
+        }
+
+        document.getElementById("newReplyForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const body = new URLSearchParams(new FormData(e.target));
+            body.append("thread_id", threadId);
+            await fetch(`/api/replies/${board}`, { method: "POST", body });
+            e.target.reset();
+            await loadThread();
+        });
+
+        loadThread();
+    </script>
+</body>
+</html>

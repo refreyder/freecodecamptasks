@@ -1,0 +1,15 @@
+{
+  "name": "anonymous-message-board",
+  "version": "1.0.0",
+  "description": "freeCodeCamp Anonymous Message Board",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node server.js --test"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "helmet": "^7.1.0"
+  }
+}

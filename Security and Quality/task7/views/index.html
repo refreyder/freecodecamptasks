@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anonymous Message Board</title>
+    <link rel="stylesheet" href="/public/style.css">
+</head>
+<body>
+    <main class="container">
+        <h1>Anonymous Message Board</h1>
+        <p><a href="/b/general/">Go to /b/general/ board</a></p>
+        <form action="/api/threads/general" method="POST">
+            <h2>New Thread on /b/general/</h2>
+            <textarea name="text" placeholder="Thread text..." required></textarea>
+            <input type="text" name="delete_password" placeholder="password to delete" required>
+            <button type="submit">Submit</button>
+        </form>
+    </main>
+</body>
+</html>
