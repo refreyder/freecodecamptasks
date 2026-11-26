@@ -1,0 +1,95 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: #0f172a;
+    color: #f8fafc;
+}
+
+.container {
+    width: 100%;
+    max-width: 1040px;
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 14px;
+    padding: 1.75rem;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+}
+
+#title {
+    margin: 0 0 0.35rem;
+    text-align: center;
+    font-size: 1.85rem;
+    color: #38bdf8;
+}
+
+#description {
+    margin: 0 0 1.25rem;
+    text-align: center;
+    color: #cbd5e1;
+    font-size: 1rem;
+}
+
+#chart-wrapper {
+    position: relative;
+    width: 100%;
+    overflow-x: auto;
+}
+
+svg {
+    display: block;
+    margin: 0 auto;
+    border-radius: 8px;
+}
+
+.tile {
+    stroke: #0f172a;
+    stroke-width: 1px;
+    cursor: pointer;
+}
+
+.tile:hover {
+    opacity: 0.88;
+}
+
+.tile-text {
+    font-size: 10px;
+    fill: #0f172a;
+    font-weight: 600;
+    pointer-events: none;
+}
+
+#legend {
+    margin-top: 1rem;
+}
+
+.legend-text {
+    fill: #e2e8f0;
+    font-size: 12px;
+}
+
+#tooltip {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    background-color: rgba(15, 23, 42, 0.95);
+    color: #f8fafc;
+    border: 1px solid #38bdf8;
+    border-radius: 8px;
+    padding: 0.6rem 0.85rem;
+    font-size: 0.88rem;
+    line-height: 1.45;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    white-space: nowrap;
+}

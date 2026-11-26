@@ -1,0 +1,79 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: #0f172a;
+    color: #f8fafc;
+    transition: background-color 0.4s ease;
+}
+
+#quote-box {
+    width: 100%;
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 2.25rem;
+    background-color: #ffffff;
+    color: #1e293b;
+    border-radius: 14px;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3);
+}
+
+.quote-content {
+    margin: 0 0 1.75rem;
+}
+
+#text {
+    margin: 0 0 1rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.45;
+    text-align: center;
+}
+
+#author {
+    font-size: 1rem;
+    color: #475569;
+    text-align: right;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+#tweet-quote,
+#new-quote {
+    padding: 0.7rem 1.25rem;
+    border-radius: 8px;
+    font: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    background-color: #0f172a;
+    color: #ffffff;
+    transition: opacity 0.2s ease, transform 0.1s ease;
+}
+
+#tweet-quote:hover,
+#new-quote:hover {
+    opacity: 0.88;
+}
+
+#tweet-quote:active,
+#new-quote:active {
+    transform: translateY(1px);
+}
