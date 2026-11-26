@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku Solver</title>
+    <link rel="stylesheet" href="/public/style.css">
+</head>
+<body>
+    <main class="container">
+        <h1>Sudoku Solver</h1>
+        <div class="layout">
+            <div class="controls">
+                <form id="solveForm">
+                    <label for="text-input">Puzzle String (81 chars)</label>
+                    <textarea id="text-input" name="puzzle" rows="4">1.5..2.84..63.12.7.2..5.....9..1....8.2.3674.3.7.2..9.47...8..1..16....926914.37.</textarea>
+                    <button type="submit" id="solve-button">Solve</button>
+                </form>
+                <form id="checkForm">
+                    <h2>Check Placement</h2>
+                    <input id="coord" type="text" name="coordinate" placeholder="Coordinate (e.g. A2)" required>
+                    <input id="val" type="text" name="value" placeholder="Value (1-9)" required>
+                    <button type="submit" id="check-button">Check</button>
+                </form>
+                <pre id="error-msg"></pre>
+            </div>
+            <div id="sudoku-grid" class="grid"></div>
+        </div>
+    </main>
+
+    <script>
+        const textInput = document.getElementById("text-input");
+        const gridEl = document.getElementById("sudoku-grid");
+        const errorEl = document.getElementById("error-msg");
+
+        function renderGrid(puzzle) {
+            gridEl.innerHTML = "";
+            for (let i = 0; i < 81; i += 1) {
+                const cell = document.createElement("div");
+                cell.className = "cell";
+                const ch = puzzle[i] || ".";
+                cell.textContent = ch === "." ? "" : ch;
+                gridEl.appendChild(cell);
+            }
+        }
+
+        textInput.addEventListener("input", () => renderGrid(textInput.value));
+
+        document.getElementById("solveForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const res = await fetch("/api/solve", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ puzzle: textInput.value })
+            });
+            const data = await res.json();
+            if (data.solution) {
+                textInput.value = data.solution;
+                renderGrid(data.solution);
+                errorEl.textContent = "";
+            } else {
+                errorEl.textContent = JSON.stringify(data);
+            }
+        });
+
+        document.getElementById("checkForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const res = await fetch("/api/check", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    puzzle: textInput.value,
+                    coordinate: document.getElementById("coord").value,
+                    value: document.getElementById("val").value
+                })
+            });
+            const data = await res.json();
+            errorEl.textContent = JSON.stringify(data, null, 2);
+        });
+
+        renderGrid(textInput.value);
+    </script>
+</body>
+</html>
