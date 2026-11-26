@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener Microservice</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <main class="container">
+        <h1>URL Shortener Microservice</h1>
+        <form action="/api/shorturl" method="POST">
+            <label for="url_input">URL:</label>
+            <input id="url_input" type="text" name="url" placeholder="https://www.freecodecamp.org/" required>
+            <button type="submit">POST URL</button>
+        </form>
+        <h2>Example Usage</h2>
+        <p><code>POST /api/shorturl</code> with <code>url=https://www.freecodecamp.org</code></p>
+        <p><code>GET /api/shorturl/1</code> redirects to the original URL.</p>
+    </main>
+</body>
+</html>
