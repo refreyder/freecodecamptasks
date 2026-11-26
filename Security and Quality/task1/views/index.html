@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metric-Imperial Converter</title>
+    <link rel="stylesheet" href="/public/style.css">
+</head>
+<body>
+    <main class="container">
+        <h1>Metric/Imperial Converter</h1>
+        <form id="convertForm">
+            <input id="convertField" type="text" name="input" placeholder="3.1mi" required>
+            <button type="submit">Convert</button>
+        </form>
+        <p id="result"></p>
+        <code id="jsonResult"></code>
+    </main>
+    <script>
+        const form = document.getElementById("convertForm");
+        const input = document.getElementById("convertField");
+        const resultEl = document.getElementById("result");
+        const jsonEl = document.getElementById("jsonResult");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const res = await fetch(`/api/convert?input=${encodeURIComponent(input.value)}`);
+            const text = await res.text();
+            try {
+                const data = JSON.parse(text);
+                resultEl.textContent = data.string || text;
+                jsonEl.textContent = JSON.stringify(data);
+            } catch {
+                resultEl.textContent = text;
+                jsonEl.textContent = text;
+            }
+        });
+    </script>
+</body>
+</html>
