@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>American / British English Translator</title>
+    <link rel="stylesheet" href="/public/style.css">
+</head>
+<body>
+    <main class="container">
+        <h1>American / British English Translator</h1>
+        <form id="translateForm">
+            <textarea id="text-input" rows="5" placeholder="Enter text to translate...">Mangoes are my favorite fruit.</textarea>
+            <div class="controls">
+                <select id="locale-select">
+                    <option value="american-to-british">American to British</option>
+                    <option value="british-to-american">British to American</option>
+                </select>
+                <button type="submit" id="translate-btn">Translate</button>
+            </div>
+        </form>
+        <section class="output-box">
+            <h2>Translated Sentence:</h2>
+            <div id="translated-sentence"></div>
+        </section>
+    </main>
+
+    <script>
+        document.getElementById("translateForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const text = document.getElementById("text-input").value;
+            const locale = document.getElementById("locale-select").value;
+            const res = await fetch("/api/translate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ text, locale })
+            });
+            const data = await res.json();
+            document.getElementById("translated-sentence").innerHTML = data.translation || data.error;
+        });
+    </script>
+</body>
+</html>
