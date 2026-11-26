@@ -92,6 +92,11 @@ button {
     border-right: 1px solid #334155;
 }
 
+.cell:nth-child(n + 19):nth-child(-n + 27),
+.cell:nth-child(n + 46):nth-child(-n + 54) {
+    border-bottom: 2px solid #38bdf8;
+}
+
 pre {
     background-color: #1e293b;
     border: 1px solid #334155;
