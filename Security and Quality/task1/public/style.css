@@ -58,3 +58,7 @@ code {
     border-radius: 8px;
     overflow-x: auto;
 }
+
+code:empty {
+    display: none;
+}
