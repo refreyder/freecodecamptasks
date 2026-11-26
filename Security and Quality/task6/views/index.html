@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Price Checker</title>
+    <link rel="stylesheet" href="/public/style.css">
+</head>
+<body>
+    <main class="container">
+        <h1>NASDAQ Stock Price Checker</h1>
+        <section class="forms">
+            <form id="singleForm">
+                <h2>Get Single Price</h2>
+                <input type="text" name="stock" placeholder="GOOG" required>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="like" value="true"> Like
+                </label>
+                <button type="submit">Get Price</button>
+            </form>
+            <form id="compareForm">
+                <h2>Compare Two Stocks</h2>
+                <input type="text" name="stock1" placeholder="GOOG" required>
+                <input type="text" name="stock2" placeholder="MSFT" required>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="like" value="true"> Like both
+                </label>
+                <button type="submit">Compare</button>
+            </form>
+        </section>
+        <pre id="jsonResult"></pre>
+    </main>
+    <script src="/public/client.js"></script>
+</body>
+</html>
