@@ -9,7 +9,71 @@
 <body>
     <main class="container">
         <h1>Issue Tracker</h1>
-        <p>API endpoints: <code>GET / POST / PUT / DELETE /api/issues/{project}</code></p>
+        <p>Example API: <a href="/api/issues/apitest">/api/issues/apitest</a></p>
+
+        <section class="grid">
+            <form id="createForm">
+                <h2>Create Issue</h2>
+                <input type="text" name="issue_title" placeholder="*Title" required>
+                <textarea name="issue_text" placeholder="*Text" required></textarea>
+                <input type="text" name="created_by" placeholder="*Created by" required>
+                <input type="text" name="assigned_to" placeholder="(opt) Assigned to">
+                <input type="text" name="status_text" placeholder="(opt) Status text">
+                <button type="submit">Submit Issue</button>
+            </form>
+
+            <form id="updateForm">
+                <h2>Update Issue</h2>
+                <input type="text" name="_id" placeholder="*_id" required>
+                <input type="text" name="issue_title" placeholder="(opt) Title">
+                <textarea name="issue_text" placeholder="(opt) Text"></textarea>
+                <input type="text" name="created_by" placeholder="(opt) Created by">
+                <input type="text" name="assigned_to" placeholder="(opt) Assigned to">
+                <input type="text" name="status_text" placeholder="(opt) Status text">
+                <label class="checkbox-label">
+                    <input type="checkbox" name="open" value="false"> Close issue
+                </label>
+                <button type="submit">Update Issue</button>
+            </form>
+
+            <form id="deleteForm">
+                <h2>Delete Issue</h2>
+                <input type="text" name="_id" placeholder="*_id" required>
+                <button type="submit" class="danger">Delete Issue</button>
+            </form>
+        </section>
+
+        <pre id="jsonResult"></pre>
     </main>
+
+    <script>
+        const resultEl = document.getElementById("jsonResult");
+
+        async function sendRequest(method, form) {
+            const data = new URLSearchParams(new FormData(form));
+            const res = await fetch("/api/issues/apitest", {
+                method,
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: data
+            });
+            const json = await res.json();
+            resultEl.textContent = JSON.stringify(json, null, 2);
+        }
+
+        document.getElementById("createForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+            sendRequest("POST", e.target);
+        });
+
+        document.getElementById("updateForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+            sendRequest("PUT", e.target);
+        });
+
+        document.getElementById("deleteForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+            sendRequest("DELETE", e.target);
+        });
+    </script>
 </body>
 </html>
